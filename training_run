@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+
+# training architectures for white box attack and VGG-16 to create attack for transfer experiments
+python training.py -model VGG-16  -n_epochs 38   -weight_decay 0.0001 -optimizer ADAM -seed 1
+python training.py -model VGG-16  -n_epochs 55   -weight_decay 0.0001 -optimizer ADAM -seed 2
+python training.py -model VGG16-OPU -n_epochs 30 -weight_decay 0.01 -opu_output 8000  -seed 0 -binary_layer
+
+# training architectures for ablation study and robust features for transfer experiments.
+python training.py -model Ablation -n_epochs 20 -weight_decay 0.035 -opu_output 8000 -opu_input 1024 -seed 0
+python training.py -model Ablation -n_epochs 17 -weight_decay 0.035 -opu_output 8000 -opu_input 1024 -seed 0
+
+python training.py -model Ablation -n_epochs 19 -weight_decay 0.02 -opu_output 8000 -opu_input 1024 -seed 2
+python training.py -model Ablation -n_epochs 19 -weight_decay 0.035 -opu_output 8000 -opu_input 1024 -binary_layer -seed 1
+python training.py -model Ablation -n_epochs 22 -weight_decay 0.03 -opu_output 8000 -opu_input 1024 -opu -seed 1
+python training.py -model Ablation -n_epochs 19 -weight_decay 0.03 -opu_output 8000 -opu_input 1024 -opu -binary_layer -seed 1
+
+# fine-tune classifiers for transfer experiments. (notice how these trained model can be distinguished from the others
+# wrt to the name only for the small number of epochs.)
+python training.py -model VGG16-OPU -n_epochs 2  -weight_decay 0.01 -opu_output 8000 -opu_input 1024 -binary_layer -features_model 'model_DFA_nepochs_17_bl__oo_8000_oi_1024' -seed 0
+python training.py -model VGG16-OPU -n_epochs 5  -weight_decay 0.01 -opu_output 8000 -opu_input 1024 -binary_layer -features_model 'model_DFA_nepochs_20_bl__oo_8000_oi_1024' -seed 0
+
+# training architectures for white box attacks and VGG-16 to create attacks for transfer experiments. CIFAR100
+python training.py -model VGG-16 -n_epochs 110 -weight_decay 0.0007 -opu_output 512 -opu_input 512 -lr 1e-2 -dataset 'cifar100' -milestones -seed 0 # 69.58%
+python training.py -model VGG-16 -n_epochs 105 -weight_decay 0.001 -opu_output 512 -opu_input 512 -lr 1e-2 -dataset 'cifar100' -milestones -seed 0 # 70.22%
+
+# training DFA architectures and then fine tune classifiers for transfer experiments.
+python training.py -model Ablation -n_epochs  125 -weight_decay 0.015 -opu_output 8000 -opu_input 1024 -seed 0 -dataset  cifar100  # 72.35%
+python training.py -model Ablation -n_epochs 79 -weight_decay 0.015 -opu_output 8000 -opu_input 1024 -seed 0 -dataset cifar100 # 68.66%
+python training.py -model VGG16-OPU -n_epochs 4  -weight_decay 0.01 -opu_output 8000 -opu_input 1024 -binary_layer -features_model 'model_DFA_nepochs_79_bl__oo_8000_oi_1024' -dataset 'cifar100' -seed 0
+python training.py -model VGG16-OPU -n_epochs 5  -weight_decay 0.01 -opu_output 8000 -opu_input 1024 -binary_layer -features_model 'model_DFA_nepochs_125_bl__oo_8000_oi_1024' -dataset 'cifar100' -seed 0
+
+# training architectures for BB attacks
+# cifar10
+# python training.py -model VGG-16  -n_epochs 55   -weight_decay 0.0001 -optimizer ADAM -seed 2 # (already trained!)
+python training.py -model VGG16-OPU n_epochs 55 -opu_output 10000 -opu_input 2000 -seed 0 -binary_layer
+# cifar100
+python training.py -model VGG-16 n_epochs 80  -seed 0 -dataset 'cifar100'
+python training.py -model VGG16-OPU n_epochs 80 -opu_output 10000 -opu_input 2000 -seed 0 -binary_layer -dataset 'cifar100'

@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+# cifar10
+# bandit
+python bb_nes_bandit_attack.py -model VGG-16  -n_epochs 55
+python bb_nes_bandit_attack.py -model VGG16-OPU n_epochs 55 -opu_output 10000 -opu_input 2000 -binary_layer
+# nes
+python bb_nes_bandit_attack.py -model VGG-16  -n_epochs 55  -nes -exploration 0.01 -gradient_iters 50
+python bb_nes_bandit_attack.py -model VGG16-OPU n_epochs 55 -opu_output 10000 -opu_input 2000 -binary_layer -nes -exploration 0.01 -gradient_iters 50
+# parsimonius
+python parsimonius_attack.py -model VGG-16  -n_epochs 55
+python parsimonius_attack.py -model VGG16-OPU n_epochs 55 -opu_output 10000 -opu_input 2000 -binary_layer
+# cifar100
+# bandit
+python bb_nes_bandit_attack.py -model VGG-16 n_epochs 80  -dataset 'cifar100'
+python bb_nes_bandit_attack.py -model VGG16-OPU n_epochs 80 -opu_output 10000 -opu_input 2000 -binary_layer -dataset 'cifar100'
+# nes
+python bb_nes_bandit_attack.py -model VGG-16 n_epochs 80  -dataset 'cifar100' -nes -exploration 0.01 -gradient_iters 50
+python bb_nes_bandit_attack.py -model VGG16-OPU n_epochs 80 -opu_output 10000 -opu_input 2000 -binary_layer -dataset 'cifar100' -nes -exploration 0.01 -gradient_iters 50
+# parsimonius
+python parsimonius_attack.py -model VGG-16  -n_epochs 80 -dataset 'cifar100'
+python parsimonius_attack.py -model VGG16-OPU n_epochs 80 -opu_output 10000 -opu_input 2000 -binary_layer -dataset 'cifar100'

@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+# Ablation study
+python transfer_attack.py -model Ablation -n_epochs 19 -opu_output 8000 -opu_input 1024 -indexes 'results/c10/ablation_indexes'
+python transfer_attack.py -model Ablation -n_epochs 19 -binary_layer -opu_output 8000 -opu_input 1024 -indexes 'results/c10/ablation_indexes'
+python transfer_attack.py -model Ablation -n_epochs 22 -opu -opu_output 8000 -opu_input 1024 -indexes 'results/c10/ablation_indexes'
+python transfer_attack.py -model Ablation -n_epochs 19 -binary_layer -opu -opu_output 8000 -opu_input 1024 -indexes 'results/c10/ablation_indexes'
+
+
+# Transfer study CIFAR10
+python transfer_attack.py -model VGG16-OPU -n_epochs 2 -opu_output 8000 -opu_input 1024 -indexes 'results/c10/transfer_indexes' -binary_layer
+python transfer_attack.py -model VGG16-OPU -n_epochs 5 -opu_output 8000 -opu_input 1024 -indexes 'results/c10/transfer_indexes' -binary_layer
+python transfer_attack.py -model VGG-16 -n_epochs 38 -opu_output 512 -opu_input 512 -indexes 'results/c10/transfer_indexes'
+
+# Transfer study CIFAR100
+python transfer_attack.py -model VGG16-OPU -n_epochs 4 -opu_output 8000 -opu_input 1024 -indexes 'results/c100/transfer_indexes' -binary_layer -dataset 'cifar100'
+python transfer_attack.py -model VGG16-OPU -n_epochs 5 -opu_output 8000 -opu_input 1024 -indexes 'results/c100/transfer_indexes' -binary_layer -dataset 'cifar100'
+python transfer_attack.py -model VGG-16 -n_epochs 105 -opu_output 512 -opu_input 512 -indexes 'results/c100/transfer_indexes' -dataset 'cifar100'

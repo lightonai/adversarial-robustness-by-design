@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+./training_run
+./adversarial_run
+./transfer_run
+./black_box_run
+

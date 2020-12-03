@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+#cifar10
+python adversarial_attack.py -model VGG-16 -n_epochs 38
+python adversarial_attack.py -model VGG16-OPU -n_epochs 30 -opu_output 8000  -binary_layer
+python adversarial_attack.py -model VGG16-OPU -n_epochs 30 -opu_output 8000  -binary_layer -sign_back
+#cifar10 save images for transfer exp
+python adversarial_attack.py -model VGG-16 -n_epochs 55 -save_images
+
+
+#cifar100
+python adversarial_attack.py -model VGG-16 -n_epochs 105 -dataset 'cifar100'
+python adversarial_attack.py -model VGG16-OPU -n_epochs 5 -opu_output 8000 -opu_input 1024  -binary_layer -dataset 'cifar100'
+python adversarial_attack.py -model VGG16-OPU -n_epochs 5 -opu_output 8000 -opu_input 1024  -binary_layer -dataset 'cifar100' -sign_back
+#cifar100 save images for transfer exp
+python adversarial_attack.py -model VGG-16 -n_epochs 110 -dataset 'cifar100' -save_images

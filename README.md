@@ -4,8 +4,6 @@
 
 We study a defense mechanism involving an Optical Processing Units and Direct Feedback Alignment algorithm against adversarial attacks. We show how such defense provides robustness vs white-box attacks, transfer attacks and black-box attacks. Finally we provide an ablation study to show which part of our defense mechanism is responsable in providing robustness for each kind of attack. 
 
-**Remember to fill in the Description, Website and Topics of the repository.**
-
 ## Requirements
 
 - A `requirements.txt` file is available at the root of this repository, specifying the required packages for all of our experiments; 

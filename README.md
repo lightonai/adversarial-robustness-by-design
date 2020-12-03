@@ -18,7 +18,7 @@ To request access to LightOn Cloud and try our photonic co-processor, please vis
 
 For researchers, we also have a LightOn Cloud for Research program, please visit https://cloud.lighton.ai/lighton-research/ for more information.
 
-## Citation \[ OPTIONAL \]
+## Citation 
 
 If you found this code and findings useful in your research, please consider citing:
 <Bibtex for citation>
